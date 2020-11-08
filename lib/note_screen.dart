@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import './model/note_model.dart';
+import 'package:intl/intl.dart';
 
 class NoteScreen extends StatefulWidget {
   @override
   _NoteScreenState createState() => _NoteScreenState();
 }
 
-class _NoteScreenState extends State<NoteScreen> {
+class _NoteScreenState extends State<NoteScreen>
+    with SingleTickerProviderStateMixin {
   int _selectedCategoryIndex = 0;
+  TabController _tabController;
+  final DateFormat _dateFormatter = DateFormat('dd MMM');
+  final DateFormat _timeFormatter = DateFormat('h:mm');
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
+  }
 
   Widget _buildCategoryCard(int index, String title, int count) {
     return GestureDetector(
@@ -125,6 +136,185 @@ class _NoteScreenState extends State<NoteScreen> {
                   );
                 }
               },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 15.0),
+            child: TabBar(
+              controller: _tabController,
+              labelColor: Colors.black,
+              unselectedLabelColor: Color(0xFFAFB4C6),
+              indicatorColor: Color(0xFF417BFB),
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorWeight: 4.0,
+              tabs: [
+                Tab(
+                  child: Text(
+                    'Notes',
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'Important',
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'Performed',
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+              isScrollable: true,
+            ),
+          ),
+          SizedBox(height: 20.0),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 30),
+            padding: EdgeInsets.all(30),
+            decoration: BoxDecoration(
+              color: Color(0xFFF5F7FB),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      notes[0].title,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      _timeFormatter.format(notes[0].date),
+                      style: TextStyle(
+                        color: Color(0xFFAFB4C6),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15.0),
+                Text(
+                  notes[0].content,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      _dateFormatter.format(notes[0].date),
+                      style: TextStyle(
+                        color: Color(0xFFAFB4C6),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Container(
+                      height: 50.0,
+                      width: 50.0,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF417BFB),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Icon(
+                        Icons.location_on,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 20),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 30),
+            padding: EdgeInsets.all(30),
+            decoration: BoxDecoration(
+              color: Color(0xFFF5F7FB),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      notes[1].title,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      _timeFormatter.format(notes[1].date),
+                      style: TextStyle(
+                        color: Color(0xFFAFB4C6),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15.0),
+                Text(
+                  notes[1].content,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      _dateFormatter.format(notes[1].date),
+                      style: TextStyle(
+                        color: Color(0xFFAFB4C6),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Container(
+                      height: 50.0,
+                      width: 50.0,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF417BFB),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Icon(
+                        Icons.location_on,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],
